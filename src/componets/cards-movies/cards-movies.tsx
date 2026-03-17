@@ -1,5 +1,4 @@
 import { Movie } from "../../shared/models/movies";
-import { loadingMovies } from "../../shared/services/movieService.js";
 import "./cars-movies.scss";
 import { useNavigate } from "react-router-dom";
 
@@ -24,7 +23,7 @@ export default function CardsMovies(props: Props) {
   return (
     <div>
         <li className="content-cards" >
-        {movies.map((movie, index) => (
+        {movies.map((movie) => (
           <div key={movie.id} className="card" onClick={()=>detailsMovie(movie.id)}>
             {/* <h2 className="card-title">{movie.title}</h2> */}
             <img

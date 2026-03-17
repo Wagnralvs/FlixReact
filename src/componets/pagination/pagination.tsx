@@ -1,5 +1,5 @@
 
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { PaginationsType } from "../../shared/models/movies";
 interface Props {
   paginations: PaginationsType;

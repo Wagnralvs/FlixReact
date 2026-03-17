@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import "./App.scss";
 import { Movie, PaginationsType } from "./shared/models/movies";
-import { getDiscoverMovies, loadingMovies } from "./shared/services/movieService.js";
+import { getDiscoverMovies, loadingMovies } from "./shared/services/movieService";
 import CardsMovies from "./componets/cards-movies/cards-movies.js";
 import PaginationCard from "./componets/pagination/pagination.js";
 import Header from "./componets/header/Header.js";
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DetailsMovie from "./componets/details-movie/DetailsMovie.js";
 
 function App() {
