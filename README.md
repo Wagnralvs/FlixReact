@@ -1,50 +1,116 @@
-# React + TypeScript + Vite
+## Deploy com GitHub Pages
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este projeto está configurado para ser publicado no GitHub Pages usando o `gh-pages`.
 
-Currently, two official plugins are available:
+### 📋 Configurações Necessárias
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+As seguintes configurações já estão em lugar:
 
-## Expanding the ESLint configuration
+**1. `npm package.json`**
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```json
+{
+  "homepage": "FlixReact/",
+  "scripts": {
+    "build": "react-scripts build",
+    "deploy": "gh-pages -d build"
+  }
+}
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- `homepage`: Define o caminho base do repositório (importante para rotas corretas)
+- `build`: Compila a aplicação para produção
+- `deploy`: Publica os arquivos da pasta `build` no GitHub Pages
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+**2. `vite.config.ts`**
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
+```typescript
+export default defineConfig({
+  base: "/FlixReact/", // Mesma rota do homepage
+  build: {
+    outDir: "build", // Pasta de saída do build
   },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+});
+```
+
+**3. `tsconfig.json`**
+A configuração padrão está correta para produção.
+
+### 🚀 Passo a Passo para Deploy
+
+#### **Passo 1: Instalar Dependências**
+
+```bash
+npm install
+```
+
+#### **Passo 2: Compilar em Produção**
+
+```bash
+npm run build
+```
+
+Isso gera uma pasta `build/` com todos os arquivos otimizados.
+
+#### **Passo 3: Fazer Deploy**
+
+```bash
+npm run deploy
+```
+
+Este comando:
+
+- Lê os arquivos da pasta `build/`
+- Envia para a branch `gh-pages` do repositório
+- Publica automaticamente no GitHub Pages
+
+#### **Passo 4: Configurar no GitHub**
+
+1. Vá para o repositório no GitHub
+2. Abra **Settings** → **Pages**
+3. Em "Build and deployment":
+   - **Source**: Selecione `Deploy from a branch`
+   - **Branch**: Selecione `gh-pages` e `/root`
+4. Clique em **Save**
+
+Sua aplicação estará disponível em: `https://seu-usuario.github.io/FlixReact/`
+
+#### **Passo 5: Verificar o Deploy**
+
+- Vá para **Actions** no GitHub para ver o status do deploy
+- Aguarde a conclusão (geralmente alguns minutos)
+- Acesse o URL da sua aplicação
+
+### ⚙️ Entendendo as Configurações
+
+| Configuração             | Propósito                                                             |
+| ------------------------ | --------------------------------------------------------------------- |
+| `homepage`               | Define a rota base (`/FlixReact/`) - importante para links e recursos |
+| `base` em vite.config.ts | Garante que os assets sejam carregados da rota correta                |
+| `outDir: 'build'`        | Especifica onde os arquivos compilados serão salvos                   |
+| Branch `gh-pages`        | GitHub Pages publica dessa branch automaticamente                     |
+
+### 🔧 Solução de Problemas
+
+**Rotas retornam 404?**
+
+- Verifique se `homepage` e `base` estão iguais
+- Certifique-se de usar rotas relativas com React Router
+
+**Deploy não aparece atualizado?**
+
+- Limpe o cache do navegador (Ctrl+Shift+Delete)
+- Aguarde alguns minutos para o GitHub atualizar
+- Verifique se a branch `gh-pages` foi criada com sucesso
+
+**Erro ao rodar `npm run deploy`?**
+
+- Instale gh-pages: `npm install --save-dev gh-pages`
+- Verifique se tem permissão de write no repositório
+- Garanta que executou `npm run build` antes
+
+### 📝 Comando Rápido (Tudo de uma vez)
+
+```bash
+npm run build && npm run deploy
 ```
