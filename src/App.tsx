@@ -48,9 +48,9 @@ function App() {
   return (
     <>
     <Header />
-    <BrowserRouter>
+    <BrowserRouter basename="/FlixReact">
      <Routes>
-      <Route path="" 
+      <Route path="/" 
       element={
        getLoading ? (
         <div className="text-center">
