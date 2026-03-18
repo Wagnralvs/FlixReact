@@ -5,7 +5,7 @@ import { getDiscoverMovies, loadingMovies } from "./shared/services/movieService
 import CardsMovies from "./componets/cards-movies/cards-movies.js";
 import PaginationCard from "./componets/pagination/pagination.js";
 import Header from "./componets/header/Header.js";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import DetailsMovie from "./componets/details-movie/DetailsMovie.js";
 
 function App() {
@@ -48,7 +48,7 @@ function App() {
   return (
     <>
     <Header />
-    <BrowserRouter basename="/FlixReact">
+    <HashRouter>
      <Routes>
       <Route path="/" 
       element={
@@ -69,7 +69,7 @@ function App() {
       </Route>
       <Route path="/details/:id" element={<DetailsMovie />} />
      </Routes>
-    </BrowserRouter>
+    </HashRouter>
      
     </>
   );
