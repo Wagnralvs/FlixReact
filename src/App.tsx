@@ -9,7 +9,7 @@ import { HashRouter, Route, Routes } from "react-router-dom";
 import DetailsMovie from "./componets/details-movie/DetailsMovie.js";
 
 function App() {
-  const [ loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [movies, setMovies] = useState<Movie[]>([]);
   const [genrieType, setGenreType] = useState<number | null>(null);
   const [pageRequest, setPageRequest] = useState<number>(1);
@@ -19,22 +19,18 @@ function App() {
     total_results: 0,
   });
 
-
- useEffect(() => {
-   onLoading(true);
+  useEffect(() => {
+    onLoading(true);
     loading$.asObservable().subscribe((loading: boolean) => {
       setLoading(loading);
-      console.log('loading ' + loading);
+      console.log("loading " + loading);
     });
-  //  loadindOn();
     fetchMovies();
-  }, [pageRequest, genrieType, location.hash]);
+  }, [pageRequest, genrieType]);
 
   function onLoading(isLoading: boolean) {
     loading$.next(isLoading);
   }
-
- 
 
   async function fetchMovies() {
     try {
@@ -45,53 +41,54 @@ function App() {
         total_pages: data.total_pages,
         total_results: data.total_results,
       });
-     
     } catch (error) {
       console.error(error);
       loading$.next(false);
     }
   }
 
-const searchMovieGenere = (genre: number | null) => {
-  loading$.next(true);
-  setGenreType(genre);
-}
+  const searchMovieGenere = (genre: number | null) => {
+    loading$.next(true);
+    setGenreType(genre);
+  };
 
- const  newRequest = (page: number) => {
+  const newRequest = (page: number) => {
+    setMovies([]);
     loading$.next(true);
     setPageRequest(page);
-  }
+  };
 
   return (
     <>
-    <div className="header">
-    <Header genresMovie={searchMovieGenere} type={genrieType} />
-    </div>
-    <HashRouter>
-     <Routes>
-      <Route path="/" 
-      element={
-        <div>
-          {loading && (
-            <div className="text-center">
-              <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
-            </div>
-          )}
-          <CardsMovies movies={movies} />
-          {!loading && (
-            <PaginationCard paginations={currentPage} newRequest={newRequest} />
-          )}
+      <HashRouter>
+        <div className="header">
+          <Header genresMovie={searchMovieGenere} type={genrieType} />
         </div>
-      
-      }>
-
-      </Route>
-      <Route path="/details" element={<DetailsMovie />} />
-     </Routes>
-    </HashRouter>
-     
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div>
+                {loading && (
+                  <div className="text-center">
+                    <div className="spinner-border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+                )}
+                <CardsMovies movies={movies} />
+                {!loading && (
+                  <PaginationCard
+                    paginations={currentPage}
+                    newRequest={newRequest}
+                  />
+                )}
+              </div>
+            }
+          ></Route>
+          <Route path="/details" element={<DetailsMovie />} />
+        </Routes>
+      </HashRouter>
     </>
   );
 }

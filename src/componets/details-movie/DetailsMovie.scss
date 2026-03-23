@@ -1,6 +1,8 @@
 .content-details{
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    padding: 1rem 5rem;
+    padding: 2rem 5rem;
     gap: 2rem;
     color: white;
 
@@ -8,13 +10,15 @@
         display: flex;
         flex-wrap: wrap;
         width: 100%;
+      //  height: 100%;
         gap: 2rem;
     
         .card-img{
-            height: 25rem;
+            height: 30rem;
             border-radius: 0.8rem;
             border: 2px solid white;
-            flex: 0 0 calc(30% - 5px);
+          //  width: 35%;
+            flex: 0 0 calc(26rem - 5px);
         }
     
         .card-info{

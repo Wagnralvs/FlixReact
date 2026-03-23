@@ -3,6 +3,7 @@ import "./Header.scss";
 import { genreDescriptions, Genres } from "../../shared/models/enu";
 import { useEffect, useState } from "react";
 import { activeDetailsCard$ } from "../../shared/services/movieService";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   genresMovie: (genre: number | null) => void;
@@ -10,8 +11,9 @@ interface Props {
 }
 
 export default function Header({ genresMovie, type }: Props) {
-  const [activeDetailsCard, setActiveDetailsCard] = useState<boolean>(false);
+ const [activeDetailsCard, setActiveDetailsCard] = useState<boolean>(false);
  const locations = location.hash;
+ const navegation = useNavigate()
 
  useEffect(() => {
   activeDetailsCard$.asObservable().subscribe((active: boolean) => {
@@ -21,15 +23,17 @@ export default function Header({ genresMovie, type }: Props) {
 
 
   function searchMovie(genre:number| null){
+    activeDetailsCard$.next(false);
+    navegation('/');
     genresMovie(genre);
   }
   return (
     <>
   <Navbar bg="dark" sticky="top" data-bs-theme="dark"  className="justify-content-top">
         <Container className="menu-header">
-          <Navbar.Brand onClick={()=>{searchMovie(null)}} href="/">ReactFlix</Navbar.Brand>
+          <Navbar.Brand onClick={()=>{searchMovie(null)}} href="/FlixReact/">ReactFlix</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link onClick={()=>{searchMovie(null)}} href="/">Home</Nav.Link>
+            <Nav.Link onClick={()=>{searchMovie(null)}} href="/FlixReact/">Home</Nav.Link>
             
             <NavDropdown title="Categorias" id="basic-nav-dropdown">
               <NavDropdown.Item href="#" onClick={()=>{searchMovie(Genres.Action)}}>
