@@ -1,4 +1,6 @@
-import { Movie } from "../../shared/models/movies";
+import { useEffect, useRef } from "react";
+import { Movie } from "../../shared/models/movies"
+import {  activeDetailsCard$, loading$, setDetailsMovie} from "../../shared/services/movieService";
 import "./cars-movies.scss";
 import { useNavigate } from "react-router-dom";
 
@@ -7,24 +9,28 @@ interface Props {
 }
 
 export default function CardsMovies(props: Props) {
-  //const { loading } = loadingMovies();
   const movies = props.movies;
   const navegate = useNavigate();
+  const lastMovieRef = useRef<HTMLDivElement | null>(null);
 
-  function detailsMovie(id: number) {
-    navegate(`/details/${id}`);
+  useEffect(() => {
+    if (lastMovieRef.current) {
+      loading$.next(false);
+    }
+  }, [movies]);
+
+  function detailsMovieCard(movie: Movie) {
+    setDetailsMovie(movie);
+    activeDetailsCard$.next(true);
+    navegate('/details');
   }
-
-// useEffect(() => {
-//   loading(false);
-// }, [movies])
 
 
   return (
     <div>
         <li className="content-cards" >
         {movies.map((movie) => (
-          <div key={movie.id} className="card" onClick={()=>detailsMovie(movie.id)}>
+          <div key={movie.id} className="card" onClick={()=>detailsMovieCard(movie)} ref={movies.length - 1 ? lastMovieRef : null}>
             {/* <h2 className="card-title">{movie.title}</h2> */}
             <img
                 className="card-img"
@@ -33,6 +39,8 @@ export default function CardsMovies(props: Props) {
                 />
             {/* <p>{movie.overview}</p> */}
           </div>
+
+          
         ))}
       </li>
     </div>

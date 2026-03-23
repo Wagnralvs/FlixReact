@@ -1,0 +1,38 @@
+.content-details{
+    width: 100%;
+    padding: 1rem 5rem;
+    gap: 2rem;
+    color: white;
+
+    .card-details{
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 2rem;
+    
+        .card-img{
+            height: 25rem;
+            border-radius: 0.8rem;
+            border: 2px solid white;
+            flex: 0 0 calc(30% - 5px);
+        }
+    
+        .card-info{
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            flex: 1;
+        }
+    }
+}
+
+@media (max-width: 720px) {
+    .content-details{
+        padding: 1.5rem;
+        .card-details{
+            flex-direction: column;
+            align-items: center;
+          
+    }
+}
+}

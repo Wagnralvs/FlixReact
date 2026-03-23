@@ -33,3 +33,14 @@
     text-align: center;
     position: absolute;
 }
+
+
+@media (max-width: 720px) {
+    .content-cards{
+        padding: 2rem;
+    }
+
+    .card{
+        width: 30%;
+    }
+}

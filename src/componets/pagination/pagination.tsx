@@ -6,10 +6,7 @@ interface Props {
   newRequest: (page: number) => void
 }
 
-
 export default function PaginationCard({paginations,  newRequest} : Props  ) {
-
-//let  = {};
 
 const pageNumbers =useMemo(() => {
   return {
@@ -26,7 +23,7 @@ function newPage(next:number){
 }
 return (
 <nav aria-label="Page navigation">
-  <ul className="pagination my-4 justify-content-center">
+  <ul className="pagination my-4 justify-content-center" >
     <li className={paginations.page > 1 ? "page-item" : "page-item disabled"}>
       <a className="page-link" href="#" aria-label="Previous" onClick={()=>newPage(pageNumbers.first - 1)}>
         <span aria-hidden="true">&laquo;</span>
@@ -39,7 +36,7 @@ return (
       <a className="page-link" onClick={()=>newPage(pageNumbers.seconds)} href="#">{pageNumbers.seconds}</a>
     </li>
     <li className={paginations.page === pageNumbers.third ? "page-item active" : "page-item"}>
-      <a className="page-link" onClick={()=>newPage(pageNumbers.third)} >{pageNumbers.third}</a>
+      <a className="page-link" onClick={()=>newPage(pageNumbers.third)} href="#">{pageNumbers.third}</a>
     </li>
     <li className="page-item">
       <a className="page-link" href="#" aria-label="Next" onClick={()=>newPage(pageNumbers.third + 1)}>

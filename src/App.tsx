@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.scss";
 import { Movie, PaginationsType } from "./shared/models/movies";
-import { getDiscoverMovies, loadingMovies } from "./shared/services/movieService";
+import { getDiscoverMovies, loading$ } from "./shared/services/movieService";
 import CardsMovies from "./componets/cards-movies/cards-movies.js";
 import PaginationCard from "./componets/pagination/pagination.js";
 import Header from "./componets/header/Header.js";
@@ -9,8 +9,9 @@ import { HashRouter, Route, Routes } from "react-router-dom";
 import DetailsMovie from "./componets/details-movie/DetailsMovie.js";
 
 function App() {
-  const { loading, getLoading} = loadingMovies();
+  const [ loading, setLoading] = useState<boolean>(false);
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [genrieType, setGenreType] = useState<number | null>(null);
   const [pageRequest, setPageRequest] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<PaginationsType>({
     page: 1,
@@ -18,56 +19,76 @@ function App() {
     total_results: 0,
   });
 
-  useEffect(() => {
+
+ useEffect(() => {
+   onLoading(true);
+    loading$.asObservable().subscribe((loading: boolean) => {
+      setLoading(loading);
+      console.log('loading ' + loading);
+    });
+  //  loadindOn();
     fetchMovies();
-  }, [pageRequest]);
+  }, [pageRequest, genrieType, location.hash]);
+
+  function onLoading(isLoading: boolean) {
+    loading$.next(isLoading);
+  }
+
+ 
 
   async function fetchMovies() {
     try {
-      const data = await getDiscoverMovies(pageRequest);
+      const data = await getDiscoverMovies(pageRequest, genrieType);
       setMovies(data.results);
       setCurrentPage({
         page: data.page,
         total_pages: data.total_pages,
         total_results: data.total_results,
       });
-      loading(false);
+     
     } catch (error) {
       console.error(error);
-      loading(false);
+      loading$.next(false);
     }
   }
 
+const searchMovieGenere = (genre: number | null) => {
+  loading$.next(true);
+  setGenreType(genre);
+}
+
  const  newRequest = (page: number) => {
-    loading(true);
+    loading$.next(true);
     setPageRequest(page);
-    console.log('pages ' + page);
-  //  fetchMovies();
   }
 
   return (
     <>
-    <Header />
+    <div className="header">
+    <Header genresMovie={searchMovieGenere} type={genrieType} />
+    </div>
     <HashRouter>
      <Routes>
       <Route path="/" 
       element={
-       getLoading ? (
-        <div className="text-center">
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      ) : (
         <div>
+          {loading && (
+            <div className="text-center">
+              <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          )}
           <CardsMovies movies={movies} />
-          <PaginationCard paginations={currentPage} newRequest={newRequest} />
+          {!loading && (
+            <PaginationCard paginations={currentPage} newRequest={newRequest} />
+          )}
         </div>
-      )
+      
       }>
 
       </Route>
-      <Route path="/details/:id" element={<DetailsMovie />} />
+      <Route path="/details" element={<DetailsMovie />} />
      </Routes>
     </HashRouter>
      
