@@ -8,7 +8,7 @@ interface Props {
 
 export default function PaginationCard({paginations,  newRequest} : Props  ) {
 
-const pageNumbers =useMemo(() => {
+const pageNumbers = useMemo(() => {
   return {
   first: paginations.page,
   seconds: paginations.page + 1,
@@ -39,7 +39,7 @@ return (
       <a className="page-link" onClick={()=>newPage(pageNumbers.third)} href="#">{pageNumbers.third}</a>
     </li>
     <li className="page-item">
-      <a className="page-link" href="#" aria-label="Next" onClick={()=>newPage(pageNumbers.third + 1)}>
+      <a className="page-link" href="#" aria-label="Next" onClick={()=>newPage(paginations.page + 1)}>
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>
