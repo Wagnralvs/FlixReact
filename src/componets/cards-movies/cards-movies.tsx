@@ -32,20 +32,24 @@ export default function CardsMovies(props: Props) {
 
   return (
     <div>
-        <li className="content-cards" >
+      <li className="content-cards">
         {movies.map((movie) => (
-          <div key={movie.id} className={!onLoadind() ? 'card' : ''}  onClick={()=>detailsMovieCard(movie)} ref={movies.length - 1 ? lastMovieRef : null}>
+          <div
+            key={movie.id}
+            className={!onLoadind() ? "card" : ""}
+            onClick={() => detailsMovieCard(movie)}
+            ref={movies.length - 1 ? lastMovieRef : null}
+          >
             {!onLoadind() && (
-            <img
+              <img
                 className="card-img"
                 src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
                 alt={movie.title}
-                />
+              />
             )}
           </div>
-        )
-      )}
+        ))}
       </li>
     </div>
- )
+  );
 }
