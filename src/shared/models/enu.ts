@@ -17,6 +17,18 @@ export const enum Genres {
 
 }
 
+export const enum ProvidersStreaming {
+  Netflix = 8,
+  AmazonPrimeVideo = 9,
+  DisneyPlus = 337,
+  AppleTvPlus = 350,
+  HBOmax = 384,
+  GloboPlay = 307,
+  ParamoutPlus = 531,
+  StarPlus = 619,
+  ClaroTVPlus = 515,
+}
+
 export const genreDescriptions: Record<number, string> = {
   0: "Explore filmes de todos os gêneros: ação, aventura, comédia, drama, terror e muito mais.",
   28: "Filmes cheios de ação com lutas, perseguições e muita adrenalina.",
@@ -38,3 +50,38 @@ export const genreDescriptions: Record<number, string> = {
   53: "Histórias cheias de tensão, perigo e reviravoltas.",
   10752: "Filmes ambientados em guerras ou conflitos militares.",
 };
+
+export const enum LabelsGenres {
+  Action = "Ação",
+  Adventure = "Aventura",
+  Animation = "Animação",
+  Comedy = "Comédia",
+  Crime = "Crime",
+  Drama= "Drama",
+  Documentary = "Documentário",
+  Fantasy = "Fantasia",
+  History = "História",
+  Horror = "Terror",
+  Music = "Música",
+  Romance = "Romance",
+  ScienceFiction = "Ficção Científica",
+  Thriller = "Thriller",
+  War= "Guerra",
+}
+
+export const enum LabelsProvidersStreaming {
+  Netflix = "Netflix",
+  AmazonPrimeVideo = "Amazon Prime Video",
+  DisneyPlus = "Disney+",
+  AppleTvPlus = "Apple TV+",
+  HBOmax = "HBOmax",
+  GloboPlay = "GloboPlay",
+  ParamoutPlus = "Paramout+",
+  StarPlus = "Star+",
+  ClaroTVPlus = "Claro TV+",
+}
+
+export enum TypeFilter {
+  Genre = "G",
+  Stream = "S",
+}

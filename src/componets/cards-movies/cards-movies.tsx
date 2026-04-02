@@ -14,6 +14,7 @@ export default function CardsMovies(props: Props) {
   const lastMovieRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    onLoadind();
     if (lastMovieRef.current) {
       loading$.next(false);
     }
@@ -25,23 +26,25 @@ export default function CardsMovies(props: Props) {
     navegate('/details');
   }
 
+  function onLoadind(): boolean {
+   return loading$._value;
+  }
 
   return (
     <div>
         <li className="content-cards" >
         {movies.map((movie) => (
-          <div key={movie.id} className="card" onClick={()=>detailsMovieCard(movie)} ref={movies.length - 1 ? lastMovieRef : null}>
-            {/* <h2 className="card-title">{movie.title}</h2> */}
+          <div key={movie.id} className={!onLoadind() ? 'card' : ''}  onClick={()=>detailsMovieCard(movie)} ref={movies.length - 1 ? lastMovieRef : null}>
+            {!onLoadind() && (
             <img
                 className="card-img"
                 src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
                 alt={movie.title}
                 />
-            {/* <p>{movie.overview}</p> */}
+            )}
           </div>
-
-          
-        ))}
+        )
+      )}
       </li>
     </div>
  )

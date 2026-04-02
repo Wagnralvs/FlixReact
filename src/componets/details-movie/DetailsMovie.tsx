@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {  getDetailsMovie } from "../../shared/services/movieService.js";
 import { Movie } from "../../shared/models/movies.js";
 import "./detailsMovie.scss";
+import { Button } from "react-bootstrap";
 
 export default function DetailsMovie() {
   const [movieDetailsCard, setMovieDetails] = useState<Movie | null>(null);
@@ -15,7 +16,10 @@ export default function DetailsMovie() {
 
   return (
     <div className="content-details">
-      <h3 className="mb-5  d-flex justify-content-center">Detalhes do Filme</h3>
+      <div className="d-flex mb-5  justify-content-between align-items-center">
+      <h3>Detalhes do Filme</h3>
+      <Button variant="link" href="/FlixReact/">voltar</Button>
+      </div>
       <div className="card-details">
         <img
           className="card-img"

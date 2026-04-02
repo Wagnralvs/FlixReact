@@ -8,13 +8,16 @@ const BASE_URL_DETAILS = "https://api.themoviedb.org/3/encontrar/934433";
 const params = {
   language: "pt-BR",
   with_genres: "",
+  with_watch_providers: "",
+  watch_region: "BR",
   api_key: API_KEY,
 };
 
-export const getDiscoverMovies = async (page, genre) => {
+export const getDiscoverMovies = async (page, filters) => {
 
-  if (genre) {
-    params.with_genres = genre;
+  if (filters) {
+    params.with_genres = filters?.genre;
+    params.with_watch_providers = filters?.stream;
   }
     const response = await axios ({
       method: "GET",

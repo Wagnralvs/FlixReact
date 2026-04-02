@@ -27,3 +27,11 @@ export interface PaginationsType {
   total_pages: number;
   total_results: number;
 }
+
+export interface FilterActiveType {
+  typeFilter: string | null;
+  id: number | null;
+  label?: string | null;
+}
+
+

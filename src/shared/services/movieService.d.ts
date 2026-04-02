@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
 
-export function getDiscoverMovies(page: number, genre:number|null): Promise<any>;
+export function getDiscoverMovies(page: number, filters:FilterActiveType): Promise<any>;
 export function getMovieDetails(id: string | undefined): Promise<any>;
 export function loadingMovies(): {
   getLoading: boolean;
